@@ -8,7 +8,6 @@ Project ini berfokus pada pengalaman helpdesk modern dengan pendekatan enterpris
 
 
 ---
-
 Fitur Utama
 
 Authentication & Role Management
@@ -261,90 +260,7 @@ Mengelola Knowledge Base
 
 Export laporan
 
-
-
 ---
-
-Panduan Instalasi
-
-1. Clone Repository
-
-git clone <repository-url>
-
-2. Masuk ke Folder Project
-
-cd itcare
-
-3. Install Dependency
-
-composer install
-
-4. Copy File Environment
-
-cp .env.example .env
-
-5. Generate Application Key
-
-php artisan key:generate
-
-6. Konfigurasi Database
-
-Atur konfigurasi database pada file .env
-
-DB_DATABASE=itcare
-DB_USERNAME=root
-DB_PASSWORD=
-
-7. Konfigurasi API Key AI
-
-GROQ_API_KEY=your_api_key
-
-8. Jalankan Migration
-
-php artisan migrate
-
-9. Buat Storage Link
-
-php artisan storage:link
-
-10. Jalankan Aplikasi
-
-php artisan serve
-
-
----
-
-Reminder Security
-
-Untuk deployment/demo production:
-
-APP_DEBUG=false
-
-Jangan pernah upload file .env ke repository publik.
-
-
----
-
-Future Improvements
-
-Advanced audit logging
-
-AI-generated Knowledge Base article
-
-Email notification
-
-Advanced SLA tracking
-
-Realtime monitoring
-
-Multi-department support
-
-Advanced analytics dashboard
-
-
-
----
-
 Status Project
 
 Status saat ini:
@@ -358,8 +274,6 @@ Activity monitoring completed
 Security hardening partially implemented
 
 Enterprise-style dashboard implemented
-
-
 
 ---
 
