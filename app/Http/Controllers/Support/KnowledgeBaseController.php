@@ -81,4 +81,8 @@ class KnowledgeBaseController extends Controller
         $kb->delete();
         return back()->with('success', 'Artikel dihapus.');
     }
+    public function show(KnowledgeBaseArticle $kb)
+    {
+        return redirect()->route('support.kb.edit', $kb);
+    }
 }

@@ -31,7 +31,7 @@
             <ul class="list-unstyled d-flex flex-column gap-3">
                 <li class="d-flex align-items-center gap-3"><span class="badge bg-primary rounded-circle p-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Pelaporan Cepat</li>
                 <li class="d-flex align-items-center gap-3"><span class="badge bg-primary rounded-circle p-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Solusi Mandiri (KB)</li>
-                <li class="d-flex align-items-center gap-3"><span class="badge bg-primary rounded-circle p-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> AI Ready</li>
+                <li class="d-flex align-items-center gap-3"><span class="badge bg-primary rounded-circle p-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> AI Powered Assistance</li>
             </ul>
         </div>
         <div class="auth-right">

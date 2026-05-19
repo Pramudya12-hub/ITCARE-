@@ -68,10 +68,15 @@ $unreadCount = auth()->check()
     <div class="main-wrapper">
         <!-- Topbar -->
         <header class="topbar">
-            <div class="search-bar">
+            <form action="{{ route('search') }}" method="GET" class="search-bar">
                 <i class="bi bi-search"></i>
-                <input type="text" placeholder="Cari pengajuan, artikel, atau solusi...">
-            </div>
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ request('q') }}"
+                    placeholder="Cari pengajuan, artikel, atau solusi...">
+            </form>
 
             <div class="topbar-right">
                 <div class="dropdown">
