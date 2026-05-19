@@ -58,13 +58,19 @@ class TicketController extends Controller
             'status' => $request->status
         ];
 
-        if ($request->status === 'Closed') {
-            if (!$ticket->resolved_at) {
-                $data['resolved_at'] = now();
-            }
-
+        if ($request->status === 'In Progress') {
             if (!$ticket->first_response_at) {
                 $data['first_response_at'] = now();
+            }
+        }
+
+        if ($request->status === 'Closed') {
+            if (!$ticket->first_response_at) {
+                $data['first_response_at'] = now();
+            }
+
+            if (!$ticket->resolved_at) {
+                $data['resolved_at'] = now();
             }
         }
 
@@ -107,7 +113,7 @@ class TicketController extends Controller
         }
         return back()->with('success', 'Komentar ditambahkan.');
     }
-    
+
     public function generateAiRecommendation(Ticket $ticket, \App\Services\GeminiService $aiService)
     {
         $prompt = "Tolong berikan rekomendasi untuk tiket IT Helpdesk berikut:\n"

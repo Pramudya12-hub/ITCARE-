@@ -9,6 +9,7 @@ use App\Http\Controllers\Support\DashboardController as SupportDashboardControll
 use App\Http\Controllers\Support\TicketController as SupportTicketController;
 use App\Http\Controllers\Support\KnowledgeBaseController as SupportKbController;
 use App\Http\Controllers\Support\AiAssistantController;
+use App\Http\Controllers\ForgotPasswordController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -20,10 +21,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])
+        ->name('password.request');
+
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'updatePassword'])
+        ->name('password.update.direct');
 });
 
 // Authenticated Routes
-Route::middleware(['auth','last.active'])->group(function () {
+Route::middleware(['auth', 'last.active'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // User Routes
@@ -31,7 +37,7 @@ Route::middleware(['auth','last.active'])->group(function () {
         Route::get('/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
         Route::post('/profile', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-        
+
         Route::get('/tickets', [UserTicketController::class, 'index'])->name('user.tickets.index');
         Route::get('/tickets/create', [UserTicketController::class, 'create'])->name('user.tickets.create');
         Route::post('/tickets', [UserTicketController::class, 'store'])->name('user.tickets.store');
@@ -47,7 +53,7 @@ Route::middleware(['auth','last.active'])->group(function () {
         Route::get('/profile', [SupportDashboardController::class, 'profile'])->name('profile');
         Route::post('/profile', [SupportDashboardController::class, 'updateProfile'])->name('profile.update');
         Route::get('/dashboard', [SupportDashboardController::class, 'index'])->name('dashboard');
-        
+
         Route::get('/tickets', [SupportTicketController::class, 'index'])->name('tickets.index');
         Route::get('/tickets-export', [SupportTicketController::class, 'exportCsv'])->name('tickets.export');
         Route::get('/tickets/{ticket}', [SupportTicketController::class, 'show'])->name('tickets.show');

@@ -9,13 +9,13 @@
     </div>
 
     @if($errors->any())
-        <div class="alert alert-danger" style="border-radius: 12px; font-size: 0.9rem;">
-            <ul class="mb-0 ps-3">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger" style="border-radius: 12px; font-size: 0.9rem;">
+        <ul class="mb-0 ps-3">
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form method="POST" action="{{ route('login') }}">
@@ -28,8 +28,15 @@
             <label class="form-label fw-medium text-secondary" style="font-size: 0.9rem;">Password</label>
             <input type="password" name="password" class="form-control form-control-custom" placeholder="••••••••" required>
         </div>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('password.request') }}"
+                class="text-decoration-none small fw-semibold"
+                style="color: var(--primary-blue);">
+                Lupa Password?
+            </a>
+        </div>
         <button type="submit" class="btn btn-primary-custom mb-3">Masuk</button>
-        
+
         <p class="text-center text-muted" style="font-size: 0.9rem;">
             Belum punya akun? <a href="{{ route('register') }}" class="text-decoration-none fw-semibold" style="color: var(--primary-blue);">Daftar di sini</a>
         </p>
