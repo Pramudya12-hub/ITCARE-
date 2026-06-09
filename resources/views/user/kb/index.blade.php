@@ -2,6 +2,7 @@
 @section('title', 'Panduan IT')
 
 @section('content')
+{{-- Halaman daftar artikel knowledge base dengan fitur pencarian dan filter kategori --}}
 <div class="text-center mb-5 mt-3">
     <h2 class="fw-bold mb-3">Bagaimana kami bisa membantu?</h2>
     <div class="mx-auto" style="max-width: 600px;">
@@ -20,6 +21,7 @@
     </div>
 </div>
 
+{{-- Daftar artikel yang tampil sesuai filter/pencarian --}}
 <div class="row g-4">
     @forelse($articles as $kb)
     <div class="col-md-4">
@@ -48,6 +50,7 @@
     @endforelse
 </div>
 
+{{-- Navigasi halaman (pagination) --}}
 <div class="mt-5 d-flex justify-content-center">
     {{ $articles->links('pagination::bootstrap-5') }}
 </div>

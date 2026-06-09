@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+// Model ini merepresentasikan data pengguna sistem (baik user biasa maupun IT Support)
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom-kolom yang boleh diisi secara massal saat membuat atau mengupdate data user.
      *
      * @var list<string>
      */
@@ -29,7 +30,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Kolom yang disembunyikan saat data user diubah ke format JSON (misalnya password tidak ikut ditampilkan).
      *
      * @var list<string>
      */
@@ -51,21 +52,25 @@ class User extends Authenticatable
         ];
     }
 
+    // Satu user bisa memiliki banyak tiket keluhan yang pernah diajukan
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
+    // Tiket-tiket yang ditugaskan ke user ini (khusus IT Support)
     public function assignedTickets()
     {
         return $this->hasMany(Ticket::class, 'assigned_to');
     }
 
+    // Satu user bisa memiliki banyak komentar pada berbagai tiket
     public function comments()
     {
         return $this->hasMany(TicketComment::class);
     }
 
+    // Artikel knowledge base yang pernah dibuat oleh user ini
     public function articles()
     {
         return $this->hasMany(KnowledgeBaseArticle::class, 'created_by');

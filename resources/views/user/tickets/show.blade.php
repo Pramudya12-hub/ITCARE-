@@ -2,11 +2,13 @@
 @section('title', 'Detail Tiket')
 
 @section('content')
+{{-- Halaman ini menampilkan detail tiket beserta diskusi, info penugasan, dan tracking SLA --}}
 @php
 $statusLabel = $ticket->status == 'Open'
 ? 'Baru Masuk'
 : ($ticket->status == 'In Progress' ? 'Sedang Ditangani' : 'Selesai Ditangani');
 
+{{-- Fungsi untuk menghitung durasi waktu respons atau resolusi dalam format jam/menit --}}
 $formatDuration = function ($start, $end) {
 if (!$start || !$end) return null;
 
@@ -110,6 +112,7 @@ if ($minutes < 1) return 'Kurang dari 1 menit' ;
             <h5 class="fw-bold mb-3">Riwayat & Diskusi</h5>
 
             <div class="chat-timeline">
+            {{-- Tampilkan rekomendasi AI jika sudah ada --}}
                 @if($ticket->ai_recommendation)
                 <div class="mb-4 position-relative">
                     <div class="chat-avatar bg-purple text-white rounded-circle d-flex align-items-center justify-content-center"
@@ -134,6 +137,7 @@ if ($minutes < 1) return 'Kurang dari 1 menit' ;
                 </div>
                 @endif
 
+                {{-- Tampilkan semua komentar dari user dan IT Support --}}
                 @forelse($ticket->comments as $comment)
                 @php
                 $avatarColor = $comment->user->role == 'it_support'
@@ -169,6 +173,7 @@ if ($minutes < 1) return 'Kurang dari 1 menit' ;
                 </div>
                 @endforelse
 
+                {{-- Form kirim komentar hanya muncul jika tiket belum ditutup --}}
                 @if($ticket->status != 'Closed')
                 <div class="mt-4">
                     <form action="{{ route('user.tickets.comment', $ticket) }}" method="POST">
@@ -263,6 +268,7 @@ if ($minutes < 1) return 'Kurang dari 1 menit' ;
                 @endif
             </div>
 
+            {{-- Kartu info SLA: menampilkan waktu respons dan resolusi, serta status keterlambatan --}}
             <div class="card-custom">
 
                 @php

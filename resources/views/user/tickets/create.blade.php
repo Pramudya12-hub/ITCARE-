@@ -2,11 +2,13 @@
 @section('title', 'Ajukan Keluhan')
 
 @section('content')
+{{-- Halaman ini berisi form pengajuan keluhan baru oleh user --}}
 <div class="mb-4">
     <h4 class="fw-bold mb-1">Ajukan Keluhan IT</h4>
     <p class="text-muted">Jelaskan kendala Anda agar dapat ditangani oleh tim Support.</p>
 </div>
 
+{{-- Form pengajuan keluhan, dikirim ke route user.tickets.store --}}
 <form action="{{ route('user.tickets.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
@@ -56,6 +58,7 @@
         </div>
     </div>
 
+    {{-- Bagian deskripsi masalah, kategori, dan pilihan prioritas --}}
     <div class="card-custom mb-4">
         <div class="mb-4">
             <label class="form-label fw-bold">Deskripsi masalah</label>
@@ -170,6 +173,7 @@
 </form>
 
 <script>
+    {{-- Script ini menampilkan preview gambar sebelum diupload --}}
     const imageInput = document.getElementById('imageInput');
     const imagePreview = document.getElementById('imagePreview');
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');

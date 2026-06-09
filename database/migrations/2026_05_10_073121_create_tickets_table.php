@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel ini menyimpan data tiket keluhan yang diajukan oleh user ke IT Support
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // user yang mengajukan keluhan
             $table->string('title');
             $table->string('category');
-            $table->string('priority');
+            $table->string('priority'); // level urgensi: Low, Medium, High
             $table->text('description');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable(); // gambar pendukung dari user (opsional)
             $table->enum('status', ['Open', 'In Progress', 'Closed'])->default('Open');
-            $table->text('ai_recommendation')->nullable();
+            $table->text('ai_recommendation')->nullable(); // rekomendasi solusi dari AI
             $table->text('ai_summary')->nullable();
             $table->timestamps();
         });

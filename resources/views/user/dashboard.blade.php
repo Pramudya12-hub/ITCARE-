@@ -2,6 +2,7 @@
 @section('title', 'Beranda')
 
 @section('content')
+{{-- Halaman ini menampilkan dashboard utama user setelah login --}}
 <div class="hero-banner mb-4">
     <h2 class="fw-bold mb-2">HALO, {{ strtoupper(explode(' ', auth()->user()->name)[0]) }} 👋</h2>
     <p class="mb-0 text-light opacity-75">Ada kendala IT? Ajukan tiket atau cari solusi instan dari knowledge base.</p>
@@ -11,6 +12,7 @@
     </div>
 </div>
 
+{{-- Kartu statistik: menampilkan jumlah tiket berdasarkan status --}}
 <div class="row g-4 mb-5">
     <div class="col-md-4">
         <div class="card-custom text-center">
@@ -58,8 +60,10 @@
     <a href="{{ route('user.tickets.index') }}" class="text-decoration-none fw-medium" style="color: var(--text-main);">Lihat semua &rarr;</a>
 </div>
 
+{{-- Daftar 3 tiket terbaru milik user --}}
 <div class="mb-5">
     @forelse($recentTickets as $ticket)
+        {{-- Tentukan ikon berdasarkan kategori tiket --}}
         @php
             $catIcons = [
                 'Network' => 'bi-wifi',
@@ -99,6 +103,7 @@
     @endforelse
 </div>
 
+{{-- Bagian panduan populer: menampilkan 3 artikel knowledge base terbaru --}}
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h5 class="fw-bold mb-0">Panduan Populer</h5>
     <a href="{{ route('user.kb.index') }}" class="text-decoration-none fw-medium" style="color: var(--text-main);">Lihat semua &rarr;</a>

@@ -10,12 +10,15 @@ use app\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+// Controller ini menangani semua aksi tiket dari sisi user (lihat, buat, dan komentar)
 class TicketController extends Controller
 {
+    // Menampilkan daftar tiket keluhan milik user yang sedang login, dengan fitur pencarian
     public function index(Request $request)
     {
         $query = Ticket::where('user_id', Auth::id());
 
+        // Filter tiket berdasarkan kata kunci pencarian jika ada
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
@@ -30,11 +33,13 @@ class TicketController extends Controller
         return view('user.tickets.index', compact('tickets'));
     }
 
+    // Menampilkan form pengajuan keluhan baru
     public function create()
     {
         return view('user.tickets.create');
     }
 
+    // Menyimpan keluhan baru yang dikirim melalui form pengajuan
     public function store(Request $request)
     {
         $request->validate([
@@ -45,6 +50,7 @@ class TicketController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        // Simpan gambar pendukung jika ada yang diunggah
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('tickets', 'public');
@@ -60,6 +66,7 @@ class TicketController extends Controller
             'status' => 'Open',
         ]);
 
+        // Kirim notifikasi ke semua IT Support bahwa ada tiket baru masuk
         $supportUsers = User::where('role', 'it_support')->get();
 
         foreach ($supportUsers as $support) {
@@ -74,6 +81,7 @@ class TicketController extends Controller
         return redirect()->route('user.tickets.index')->with('success', 'Keluhan berhasil diajukan.');
     }
 
+    // Menampilkan detail tiket beserta komentar-komentarnya (hanya bisa dilihat oleh pemilik tiket)
     public function show(Ticket $ticket)
     {
         if ($ticket->user_id !== Auth::id()) {
@@ -83,6 +91,7 @@ class TicketController extends Controller
         return view('user.tickets.show', compact('ticket'));
     }
 
+    // Menyimpan komentar baru dari user pada tiket tertentu
     public function comment(Request $request, Ticket $ticket)
     {
         if ($ticket->user_id !== Auth::id()) {

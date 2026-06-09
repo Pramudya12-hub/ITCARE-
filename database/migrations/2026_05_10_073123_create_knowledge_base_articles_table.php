@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel ini menyimpan artikel panduan/tutorial yang bisa dibaca oleh semua user
         Schema::create('knowledge_base_articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('category');
-            $table->text('content');
+            $table->text('content'); // isi artikel dalam format teks panjang
             $table->string('thumbnail')->nullable();
-            $table->enum('status', ['draft', 'published'])->default('draft');
-            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
-            $table->boolean('generated_by_ai')->default(false);
+            $table->enum('status', ['draft', 'published'])->default('draft'); // hanya artikel 'published' yang bisa dibaca user
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete(); // IT Support yang membuat artikel
+            $table->boolean('generated_by_ai')->default(false); // menandai apakah artikel ini dibuat oleh AI
             $table->timestamps();
         });
     }

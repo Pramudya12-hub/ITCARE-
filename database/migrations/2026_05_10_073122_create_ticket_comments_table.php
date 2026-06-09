@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel ini menyimpan komentar/diskusi pada tiket, baik dari user maupun IT Support
         Schema::create('ticket_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('ticket_id')->constrained()->cascadeOnDelete(); // tiket yang dikomentari
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();   // siapa yang memberi komentar
             $table->text('comment');
             $table->timestamps();
         });

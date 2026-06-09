@@ -11,24 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel ini menyimpan data akun semua pengguna sistem (user biasa maupun IT Support)
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['user', 'it_support'])->default('user');
+            $table->enum('role', ['user', 'it_support'])->default('user'); // role menentukan hak akses di sistem
             $table->string('profile_photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // Tabel sementara untuk menyimpan token reset password
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // Tabel untuk menyimpan data sesi login user
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+// Controller ini menangani fitur reset password tanpa email (langsung ganti di form)
 class ForgotPasswordController extends Controller
 {
+    // Menampilkan form reset password
     public function showForm()
     {
         return view('auth.forgot-password');
     }
 
+    // Memproses penggantian password: cari user berdasarkan email, lalu simpan password baru
     public function updatePassword(Request $request)
     {
         $request->validate([

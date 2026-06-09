@@ -11,10 +11,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+// Controller ini menangani halaman dashboard, profil, dan update profil untuk IT Support
 class DashboardController extends Controller
 {
+    // Menampilkan dashboard IT Support beserta statistik tiket, grafik, dan daftar user aktif
     public function index()
     {
+        // Hitung ringkasan statistik tiket dari semua user
         $stats = [
             'total' => Ticket::count(),
             'open' => Ticket::where('status', 'Open')->count(),
@@ -23,6 +26,7 @@ class DashboardController extends Controller
             'kb_total' => KnowledgeBaseArticle::count(),
         ];
 
+        // Hitung persentase tiket per kategori untuk ditampilkan di grafik
         $totalTickets = $stats['total'] ?: 1;
         $categories = Ticket::selectRaw('category, count(*) as count')
             ->groupBy('category')
@@ -32,6 +36,7 @@ class DashboardController extends Controller
                 return $item;
             });
 
+        // Buat data volume tiket 7 hari terakhir untuk grafik mingguan
         $weeklyVolume = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i);
@@ -42,6 +47,7 @@ class DashboardController extends Controller
             ];
         }
 
+        // Ambil 5 tiket terbaru dan 5 user paling aktif
         $latestTickets = Ticket::with('user')->latest()->take(5)->get();
 
         $activeUsers = 
@@ -51,11 +57,13 @@ class DashboardController extends Controller
 
         return view('support.dashboard', compact('stats', 'latestTickets', 'categories', 'weeklyVolume', 'activeUsers'));
     }
+    // Menampilkan halaman profil IT Support
     public function profile()
     {
         return view('support.profile');
     }
 
+    // Menyimpan perubahan data profil IT Support (nama, email, password, dan foto profil)
     public function updateProfile(Request $request)
     {
         $user = User::findOrFail(Auth::id());
@@ -72,10 +80,12 @@ class DashboardController extends Controller
             'email' => $request->email,
         ];
 
+        // Jika diisi password baru, enkripsi sebelum disimpan
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
 
+        // Jika ada foto baru yang diunggah, simpan ke storage
         if ($request->hasFile('profile_photo')) {
             $data['profile_photo'] = $request->file('profile_photo')->store('profiles', 'public');
         }

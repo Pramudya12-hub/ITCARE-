@@ -7,13 +7,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+// Controller ini menangani proses login, register, dan logout
 class AuthController extends Controller
 {
+    // Menampilkan halaman form login
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    // Memproses login: cek email dan password, lalu arahkan ke dashboard sesuai role
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -38,11 +41,13 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    // Menampilkan halaman form registrasi akun baru
     public function showRegister()
     {
         return view('auth.register');
     }
 
+    // Memproses registrasi: validasi data, simpan user baru, lalu langsung login
     public function register(Request $request)
     {
         $request->validate([
@@ -63,6 +68,7 @@ class AuthController extends Controller
         return redirect()->route('user.dashboard');
     }
 
+    // Logout: hapus sesi user dan arahkan kembali ke halaman utama
     public function logout(Request $request)
     {
         Auth::logout();

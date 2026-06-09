@@ -2,7 +2,9 @@
 @section('title', 'Dashboard Support')
 
 @section('content')
+{{-- Halaman ini menampilkan dashboard IT Support dengan statistik, grafik, dan aktivitas terbaru --}}
 @php
+    {{-- Fungsi bantu untuk mengonversi status tiket ke label bahasa Indonesia --}}
     $statusText = function ($status) {
         return $status == 'Open'
             ? 'Baru Masuk'
@@ -32,6 +34,7 @@
         ? '#e5e7eb 0% 100%'
         : implode(', ', $conicGradients);
 
+    {{-- Buat string conic-gradient untuk grafik donut distribusi kategori --}}
     $donutStyle = 'width: 150px; height: 150px; border-radius: 50%; background: conic-gradient(' . $conicGradientStr . ');';
 @endphp
 
@@ -48,6 +51,7 @@
     </a>
 </div>
 
+{{-- Kartu statistik ringkasan: total tiket, sedang ditangani, selesai, dan jumlah artikel KB --}}
 <div class="row g-4 mb-5">
     <div class="col-md-3">
         <div class="card-custom text-center border-0 shadow-sm">
@@ -122,6 +126,7 @@
     </div>
 </div>
 
+{{-- Grafik batang volume tiket mingguan dan grafik donut distribusi per kategori --}}
 <div class="row g-4 mb-4">
     <div class="col-md-8">
         <div class="card-custom h-100">
@@ -190,6 +195,7 @@
     </div>
 </div>
 
+{{-- Daftar 5 tiket terbaru yang masuk --}}
 <div class="card-custom">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h6 class="fw-bold mb-0">Tiket Terbaru</h6>
@@ -239,6 +245,7 @@
         </div>
     @endforelse
 </div>
+{{-- Tabel monitoring user aktif: menampilkan waktu login terakhir dan status online/offline --}}
 <div class="card-custom mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -273,6 +280,7 @@
                 @forelse($activeUsers as $user)
 
                     @php
+                        {{-- User dianggap online jika aktif dalam 5 menit terakhir --}}
                         $isOnline =
                             $user->last_active_at &&
                             \Carbon\Carbon::parse($user->last_active_at)->gt(now()->subMinutes(5));
